@@ -1,155 +1,79 @@
-import java.util.ArrayList;
-import java.util.List;
+class AVLTree {
+    private class AVLNode {
+        int value, height;
+        AVLNode left, right;
 
-public class AVLTree {
-    private class Node {
-        int value;
-        Node left, right;
-        int height;
-
-        Node(int value) {
+        public AVLNode(int value) {
             this.value = value;
-            this.height = 1; // Altura de um nó recém-criado é 1.
+            this.height = 1;
         }
     }
 
-    private Node root;
+    protected AVLNode root;
 
-    /** Adicionar elementos na árvore */
+    // Adicionar elemento com balanceamento
     public void add(int value) {
-        root = add(root, value);
+        root = addRecursive(root, value);
     }
 
-    private Node add(Node node, int value) {
-        if (node == null) return new Node(value);
+    private AVLNode addRecursive(AVLNode node, int value) {
+        if (node == null) return new AVLNode(value);
 
         if (value < node.value) {
-            node.left = add(node.left, value);
+            node.left = addRecursive(node.left, value);
         } else if (value > node.value) {
-            node.right = add(node.right, value);
-        } else {
-            return node; // Valores duplicados não são permitidos.
+            node.right = addRecursive(node.right, value);
         }
 
-        // Atualiza a altura e reequilibra o nó.
         updateHeight(node);
-        return rebalance(node);
+        return balance(node);
     }
 
-    /** Retornar o pai de um elemento */
-    public Integer getParent(int value) {
-        return getParent(root, null, value);
+    // Atualizar altura
+    private void updateHeight(AVLNode node) {
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
     }
 
-    private Integer getParent(Node node, Node parent, int value) {
-        if (node == null) return null;
-
-        if (node.value == value) return parent == null ? null : parent.value;
-
-        if (value < node.value) {
-            return getParent(node.left, node, value);
-        } else {
-            return getParent(node.right, node, value);
-        }
-    }
-
-    /** Limpar o conteúdo da árvore */
-    public void clear() {
-        root = null;
-    }
-
-    /** Verificar se um elemento está armazenado na árvore ou não */
-    public boolean contains(int value) {
-        return contains(root, value);
-    }
-
-    private boolean contains(Node node, int value) {
-        if (node == null) return false;
-
-        if (value < node.value) {
-            return contains(node.left, value);
-        } else if (value > node.value) {
-            return contains(node.right, value);
-        } else {
-            return true;
-        }
-    }
-
-    /** Verificar qual é a altura da árvore */
-    public int height() {
-        return height(root);
-    }
-
-    private int height(Node node) {
+    int getHeight(AVLNode node) {
         return node == null ? 0 : node.height;
     }
 
-    /** Verificar quantos elementos tem na árvore */
-    public int size() {
-        return size(root);
-    }
+    // Balancear nodo
+    private AVLNode balance(AVLNode node) {
+        int balanceFactor = getBalanceFactor(node);
 
-    private int size(Node node) {
-        if (node == null) return 0;
-
-        return 1 + size(node.left) + size(node.right);
-    }
-
-    /** Verificar se a árvore está vazia ou não */
-    public boolean isEmpty() {
-        return root == null;
-    }
-
-    /** Retornar os elementos da árvore em uma lista usando caminhamento central */
-    public List<Integer> inOrder() {
-        List<Integer> result = new ArrayList<>();
-        inOrder(root, result);
-        return result;
-    }
-
-    private void inOrder(Node node, List<Integer> result) {
-        if (node != null) {
-            inOrder(node.left, result);
-            result.add(node.value);
-            inOrder(node.right, result);
-        }
-    }
-
-    /** Atualizar altura do nó */
-    private void updateHeight(Node node) {
-        node.height = 1 + Math.max(height(node.left), height(node.right));
-    }
-
-    /** Obter o fator de balanceamento */
-    private int getBalance(Node node) {
-        return node == null ? 0 : height(node.left) - height(node.right);
-    }
-
-    /** Rebalancear a árvore */
-    private Node rebalance(Node node) {
-        int balance = getBalance(node);
-
-        if (balance > 1) { // Subárvore esquerda é mais alta.
-            if (getBalance(node.left) < 0) {
-                node.left = rotateLeft(node.left); // Rotação dupla.
-            }
+        // Rotação esquerda
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
             return rotateRight(node);
-        } else if (balance < -1) { // Subárvore direita é mais alta.
-            if (getBalance(node.right) > 0) {
-                node.right = rotateRight(node.right); // Rotação dupla.
-            }
+        }
+        // Rotação direita
+        if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0) {
             return rotateLeft(node);
         }
+        // Rotação esquerda-direita
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = rotateLeft(node.left);
+            return rotateRight(node);
+        }
+        // Rotação direita-esquerda
+        if (balanceFactor < -1 && getBalanceFactor(node.right) > 0) {
+            node.right = rotateRight(node.right);
+            return rotateLeft(node);
+        }
+
         return node;
     }
 
-    /** Rotação à direita */
-    private Node rotateRight(Node y) {
-        Node x = y.left;
-        Node T2 = x.right;
+    private int getBalanceFactor(AVLNode node) {
+        return node == null ? 0 : getHeight(node.left) - getHeight(node.right);
+    }
+
+    private AVLNode rotateRight(AVLNode y) {
+        AVLNode x = y.left;
+        AVLNode T = x.right;
 
         x.right = y;
-        y.left = T2;
+        y.left = T;
 
         updateHeight(y);
         updateHeight(x);
@@ -157,47 +81,68 @@ public class AVLTree {
         return x;
     }
 
-    /** Rotação à esquerda */
-    private Node rotateLeft(Node x) {
-        Node y = x.right;
-        Node T2 = y.left;
+    private AVLNode rotateLeft(AVLNode y) {
+        AVLNode x = y.right;
+        AVLNode T = x.left;
 
-        y.left = x;
-        x.right = T2;
+        x.left = y;
+        y.right = T;
 
-        updateHeight(x);
         updateHeight(y);
+        updateHeight(x);
 
-        return y;
+        return x;
     }
 
-    /** Método principal para testes */
-    public static void main(String[] args) {
-        AVLTree tree = new AVLTree();
+    // Caminhamento central
+    public void inOrder() {
+        inOrderRecursive(root);
+    }
 
-        // Inserir números na árvore.
-        int[] values = {10, 20, 30, 40, 50, 60, 70, 80, 90};
-        for (int value : values) {
-            tree.add(value);
+    private void inOrderRecursive(AVLNode node) {
+        if (node != null) {
+            inOrderRecursive(node.left);
+            System.out.print(node.value + " ");
+            inOrderRecursive(node.right);
         }
+    }
 
-        // Apresentar a altura da árvore.
-        System.out.println("Altura da árvore: " + tree.height());
+    // Limpar o conteúdo da árvore
+    public void clear() {
+        root = null;
+    }
 
-        // Apresentar o conteúdo da árvore.
-        System.out.println("Caminhamento em ordem: " + tree.inOrder());
+    // Verificar se um elemento está armazenado na árvore
+    public boolean contains(int value) {
+        return containsRecursive(root, value);
+    }
 
-        // Limpar a árvore.
-        tree.clear();
-        System.out.println("Árvore limpa.");
-
-        // Inserir números na ordem inversa.
-        int[] reversedValues = {90, 80, 70, 60, 50, 40, 30, 20, 10};
-        for (int value : reversedValues) {
-            tree.add(value);
+    private boolean containsRecursive(AVLNode node, int value) {
+        if (node == null) {
+            return false;
         }
+        if (value == node.value) {
+            return true;
+        }
+        return value < node.value
+                ? containsRecursive(node.left, value)
+                : containsRecursive(node.right, value);
+    }
 
-        // Apresentar o conteúdo da árvore.
-        System.out.println("Caminhamento em ordem: " + tree.inOrder());
+    // Verificar quantos elementos tem na árvore
+    public int size() {
+        return sizeRecursive(root);
+    }
+
+    private int sizeRecursive(AVLNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + sizeRecursive(node.left) + sizeRecursive(node.right);
+    }
+
+    // Verificar se a árvore está vazia
+    public boolean isEmpty() {
+        return root == null;
     }
 }
