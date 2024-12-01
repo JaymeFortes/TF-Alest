@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,28 +27,23 @@ public class AVLTree {
         }
 
         node.height = 1 + Math.max(height(node.left), height(node.right));
-        return balance(node);
-    }
 
-    // Método para balancear o nó
-    private Node balance(Node node) {
         int balanceFactor = getBalance(node);
-        if (balanceFactor > 1) {
-            if (getBalance(node.left) >= 0) {
-                return rightRotate(node);
-            } else {
-                node.left = leftRotate(node.left);
-                return rightRotate(node);
-            }
+        if (balanceFactor > 1 && value < node.left.value) {
+            return rightRotate(node);
         }
-        if (balanceFactor < -1) {
-            if (getBalance(node.right) <= 0) {
-                return leftRotate(node);
-            } else {
-                node.right = rightRotate(node.right);
-                return leftRotate(node);
-            }
+        if (balanceFactor < -1 && value > node.right.value) {
+            return leftRotate(node);
         }
+        if (balanceFactor > 1 && value > node.left.value) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+        if (balanceFactor < -1 && value < node.right.value) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
+
         return node;
     }
 
