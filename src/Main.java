@@ -1,33 +1,45 @@
 public class Main {
     public static void main(String[] args) {
-        BinarySearchTree bst = new BinarySearchTree();
+        BinarySearchTree tree = new BinarySearchTree();
 
-        // Inserir valores na árvore
-        bst.insert(10);
-        bst.insert(5);
-        bst.insert(15);
-        bst.insert(3);
-        bst.insert(7);
-        bst.insert(18);
+        tree.insert(10);
+        tree.insert(5);
+        tree.insert(20);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(15);
+        tree.insert(25);
 
-        // Testando AverageExternalNodes
-        int averageExternal = bst.AverageExternalNodes(bst.root);
-        System.out.println("Média dos nodos externos: " + averageExternal);
+        System.out.println("Média da árvore: " + tree.AverageExternalNodes(tree.root));
 
-        // Testando maxNodeLevel
-        int maxLevel = bst.maxNodeLevel(bst.root);
-        System.out.println("Nível do maior valor: " + maxLevel);
+        System.out.println("Nível em que está localizado o maior valor existente na árvore: " + tree.maxNodeLevel(tree.root));
 
-        // Testando diffMaxRoot
-        int diffMaxRoot = bst.diffMaxRoot();
-        System.out.println("Diferença entre maior valor e raiz: " + diffMaxRoot);
+        System.out.println("Diferença entre o maior valor presente na árvore e o valor do nodo raiz: " + tree.diffMaxRoot());
 
-        // Testando sumBetween
-        int sumBetween = bst.sumBetween(5, 15, bst.root);
-        System.out.println("Soma dos nodos entre 5 e 15: " + sumBetween);
+        System.out.println("Soma dos valores de todos os nodos que estão entre dois valores especificados: " + tree.sumBetween(5, 20, tree.root));
 
-        // Testando breadthFirstOrder
         System.out.print("Caminhamento em largura: ");
-        bst.breadthFirstOrder();
+        tree.breadthFirstOrder();
+
+        System.out.println("\n\nÁrvore estruturada:");
+        tree.printTree();
+
+        AVLTree treeAvl = new AVLTree();
+        int[] values1 = {10, 20, 30, 40, 50, 60, 70, 80, 90};
+        for (int value : values1) {
+            treeAvl.add(value);
+        }
+        System.out.println("Árvore AVL:");
+        treeAvl.printTree();
+        System.out.println("Altura da árvore: " + treeAvl.height());
+        treeAvl.clear();
+        int[] values2 = {90, 80, 70, 60, 50, 40, 30, 20, 10};
+        for (int value : values2) {
+            treeAvl.add(value);
+        }
+        System.out.println("Árvore AVL 2:");
+        treeAvl.printTree();
+        System.out.println("Conteúdo da árvore (caminhamento central): " + treeAvl.inOrder());
     }
 }
+
