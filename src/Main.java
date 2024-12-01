@@ -10,18 +10,18 @@ public class Main {
         tree.insert(15);
         tree.insert(25);
 
-        System.out.println("Average of external nodes: " + tree.AverageExternalNodes(tree.root));
+        System.out.println("Média da árvore: " + tree.AverageExternalNodes(tree.root));
 
-        System.out.println("Level of the max node: " + tree.maxNodeLevel(tree.root));
+        System.out.println("Nível em que está localizado o maior valor existente na árvore: " + tree.maxNodeLevel(tree.root));
 
-        System.out.println("Difference between max node and root: " + tree.diffMaxRoot());
+        System.out.println("Diferença entre o maior valor presente na árvore e o valor do nodo raiz: " + tree.diffMaxRoot());
 
-        System.out.println("Sum of nodes between 5 and 20: " + tree.sumBetween(5, 20, tree.root));
+        System.out.println("Soma dos valores de todos os nodos que estão entre dois valores especificados: " + tree.sumBetween(5, 20, tree.root));
 
-        System.out.print("Breadth-First Order: ");
+        System.out.print("Caminhamento em largura: ");
         tree.breadthFirstOrder();
 
-        System.out.println("\n\nStructured Tree:");
+        System.out.println("\n\nÁrvore estruturada:");
         tree.printTree();
 
         AVLTree treeAvl = new AVLTree();
