@@ -1,6 +1,9 @@
 public class Node {
-    public Integer element;
-    public Node left;
-    public Node right;
-}
+    int value;
+    Node left, right;
 
+    public Node(int item) {
+        value = item;
+        left = right = null;
+    }
+}

@@ -1,74 +1,33 @@
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        // Inicializando a árvore binária de busca
-        BinarySearchTree bst = new BinarySearchTree();
+        BinarySearchTree tree = new BinarySearchTree();
+        // Adicionar nós à árvore
+        tree.insert(10);
+        tree.insert(5);
+        tree.insert(20);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(15);
+        tree.insert(25);
 
-        // Inserindo valores na árvore
-        int[] values = {10, 5, 15, 3, 7, 18};
-        for (int value : values) {
-            bst.insert(value);
-        }
+        // Testar AverageExternalNodes
+        System.out.println("Average of external nodes: " + tree.AverageExternalNodes(tree.root));
 
-        // Exibindo a estrutura da árvore
-        System.out.println("Estrutura da árvore:");
-        bst.printTree(); // Certifique-se de que o método printTree exiba a árvore corretamente.
+        // Testar maxNodeLevel
+        System.out.println("Level of the max node: " + tree.maxNodeLevel(tree.root));
 
-        // Calculando e exibindo a média dos nós externos
-        double averageExternal = bst.AverageExternalNodes(bst.root);
-        System.out.println("\nMédia dos nodos externos: " + averageExternal);
+        // Testar diffMaxRoot
+        System.out.println("Difference between max node and root: " + tree.diffMaxRoot());
 
-        // Encontrando e exibindo o nível do maior valor
-        int maxLevel = bst.maxNodeLevel(bst.root);
-        System.out.println("Nível do maior valor: " + maxLevel);
+        // Testar sumBetween
+        System.out.println("Sum of nodes between 5 and 20: " + tree.sumBetween(5, 20, tree.root));
 
-        // Calculando a diferença entre o maior valor e a raiz
-        int diffMaxRoot = bst.diffMaxRoot();
-        System.out.println("Diferença entre maior valor e raiz: " + diffMaxRoot);
+        // Testar breadthFirstOrder
+        System.out.print("Breadth-First Order: ");
+        tree.breadthFirstOrder();
 
-        // Calculando a soma dos nós entre 5 e 15
-        int sumBetween = bst.sumBetween(5, 15, bst.root);
-        System.out.println("Soma dos nodos entre 5 e 15: " + sumBetween);
-
-        // Caminhamento em largura (Breadth-First Order)
-        System.out.print("Caminhamento em largura: ");
-        bst.breadthFirstOrder(); // Certifique-se de que este método imprima corretamente os nós.
-        System.out.println();
-
-        AVLTree avlTree = new AVLTree();
-
-        // Inserindo os números na árvore (ordem crescente)
-        int[] valuesToAdd = {10, 20, 30, 40, 50, 60, 70, 80, 90};
-        for (int value : valuesToAdd) {
-            avlTree.add(value);
-        }
-
-        // Exibindo a estrutura da árvore
-        System.out.println("Estrutura da árvore AVL após inserção (ordem crescente):");
-        avlTree.printTree();
-
-        // Apresentando a altura da árvore
-        System.out.println("\nAltura da árvore AVL: " + avlTree.getHeight());
-
-        // Limpando a árvore (vamos apenas criar uma nova árvore aqui)
-        avlTree = new AVLTree(); // Recria a árvore para limpar o conteúdo
-
-        // Inserindo os números na árvore (ordem decrescente)
-        int[] valuesToReAdd = {90, 80, 70, 60, 50, 40, 30, 20, 10};
-        for (int value : valuesToReAdd) {
-            avlTree.add(value);
-        }
-
-        // Exibindo a estrutura da árvore após nova inserção (ordem decrescente)
-        System.out.println("\nEstrutura da árvore AVL após inserção (ordem decrescente):");
-        avlTree.printTree();
-
-        // Exibindo o conteúdo da árvore com caminhamento central (inOrder)
-        System.out.println("\nConteúdo da árvore em ordem crescente (Caminhamento Central):");
-        List<Integer> inOrderValues = avlTree.inOrder();
-        System.out.println(inOrderValues);
+        // Imprimir a árvore de forma estruturada
+        System.out.println("\n\nStructured Tree:");
+        tree.printTree();
     }
 }
-
-
