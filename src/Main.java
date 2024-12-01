@@ -1,58 +1,45 @@
 public class Main {
     public static void main(String[] args) {
-        // Teste da Árvore Binária de Pesquisa (BinarySearchTree)
-        BinarySearchTree bst = new BinarySearchTree();
-        bst.add(50);
-        bst.add(30);
-        bst.add(70);
-        bst.add(20);
-        bst.add(40);
-        bst.add(60);
-        bst.add(80);
+        BinarySearchTree tree = new BinarySearchTree();
 
-        System.out.println("Ordem em largura (Breadth-first order):");
-        bst.breadthFirstOrder();
+        tree.insert(10);
+        tree.insert(5);
+        tree.insert(20);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(15);
+        tree.insert(25);
 
-        System.out.println("Média dos Nós Externos: " + bst.AverageExternalNodes(bst.root));
-        System.out.println("Nível do Nó com Maior Valor: " + bst.maxNodeLevel(bst.root));
-        System.out.println("Diferença entre o Maior Valor e a Raiz: " + bst.diffMaxRoot());
-        System.out.println("Soma entre 30 e 70: " + bst.sumBetween(30, 70, bst.root));
+        System.out.println("Average of external nodes: " + tree.AverageExternalNodes(tree.root));
 
-        // Teste da Árvore AVL
-        AVLTree avl = new AVLTree();
-        avl.add(10);
-        avl.add(20);
-        avl.add(30);
-        avl.add(40);
-        avl.add(50);
-        avl.add(60);
+        System.out.println("Level of the max node: " + tree.maxNodeLevel(tree.root));
 
-        System.out.println("\nCaminhamento Em Ordem (InOrder) da AVL:");
-        avl.inOrder();
+        System.out.println("Difference between max node and root: " + tree.diffMaxRoot());
 
-        // Testes adicionais para AVL
-        System.out.println("\nContém 40? " + avl.contains(40));
-        System.out.println("Altura da árvore AVL: " + avl.getHeight(avl.root));
-        System.out.println("Tamanho da árvore AVL: " + avl.size());
-        System.out.println("Árvore AVL está vazia? " + avl.isEmpty());
+        System.out.println("Sum of nodes between 5 and 20: " + tree.sumBetween(5, 20, tree.root));
 
-        // Limpar AVL
-        avl.clear();
-        System.out.println("Árvore AVL limpa.");
-        System.out.println("Árvore AVL está vazia? " + avl.isEmpty());
+        System.out.print("Breadth-First Order: ");
+        tree.breadthFirstOrder();
 
-        // Inserir números na ordem inversa
-        avl.add(90);
-        avl.add(80);
-        avl.add(70);
-        avl.add(60);
-        avl.add(50);
-        avl.add(40);
-        avl.add(30);
-        avl.add(20);
-        avl.add(10);
+        System.out.println("\n\nStructured Tree:");
+        tree.printTree();
 
-        System.out.println("Caminhamento Em Ordem (InOrder) da AVL após inserções inversas:");
-        avl.inOrder();
+        AVLTree treeAvl = new AVLTree();
+        int[] values1 = {10, 20, 30, 40, 50, 60, 70, 80, 90};
+        for (int value : values1) {
+            treeAvl.add(value);
+        }
+        System.out.println("Árvore AVL:");
+        treeAvl.printTree();
+        System.out.println("Altura da árvore: " + treeAvl.height());
+        treeAvl.clear();
+        int[] values2 = {90, 80, 70, 60, 50, 40, 30, 20, 10};
+        for (int value : values2) {
+            treeAvl.add(value);
+        }
+        System.out.println("Árvore AVL 2:");
+        treeAvl.printTree();
+        System.out.println("Conteúdo da árvore (caminhamento central): " + treeAvl.inOrder());
     }
 }
+
