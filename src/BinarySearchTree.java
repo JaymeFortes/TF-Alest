@@ -93,7 +93,6 @@ public class BinarySearchTree {
      * Método sumBetween()
      * Calcula a soma dos valores de todos os nodos que estão entre dois valores especificados
      * (inclusive o nodo inicial, mas excluindo o nodo final).
-     * O método percorre apenas os nodos dentro do intervalo fornecido.
      * @param start valor inicial do intervalo, incluído na soma.
      * @param end valor final do intervalo, excluído da soma.
      * @param current nodo atual da árvore (geralmente inicializado com a raiz).
@@ -135,6 +134,34 @@ public class BinarySearchTree {
         System.out.println();
     }
 
+    /**
+     * Método printTree()
+     * Exibe a árvore binária em forma de diagrama.
+     */
+    public void printTree() {
+        printTreeRec(root, 0);
+    }
+
+    private void printTreeRec(Node node, int level) {
+        if (node == null) {
+            return;
+        }
+        // Primeiro, exibe o lado direito (mais ao fundo)
+        printTreeRec(node.right, level + 1);
+        // Exibe o valor do nodo com espaçamento proporcional ao nível
+        System.out.println(generateSpaces(level * 4) + node.value);
+        // Depois, exibe o lado esquerdo (mais à frente)
+        printTreeRec(node.left, level + 1);
+    }
+
+    private String generateSpaces(int count) {
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            spaces.append(" ");
+        }
+        return spaces.toString();
+    }
+
     // Método para inserir um nodo na árvore
     public void insert(int value) {
         root = insertRec(root, value);
@@ -151,5 +178,3 @@ public class BinarySearchTree {
         return root;
     }
 }
-
-
