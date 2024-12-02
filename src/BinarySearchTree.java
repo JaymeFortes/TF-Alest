@@ -12,7 +12,10 @@ public class BinarySearchTree {
     void insert(int value) {
         root = insertRec(root, value);
     }
-
+    public String formatTree() {
+        TreeFormatter formatter = new TreeFormatter();
+        return formatter.topDown(root);
+    }
     // Método recursivo para inserir um novo nó
     Node insertRec(Node root, int value) {
         if (root == null) {

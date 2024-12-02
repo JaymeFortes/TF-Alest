@@ -11,18 +11,13 @@ public class Main {
         tree.insert(25);
 
         System.out.println("Average of external nodes: " + tree.AverageExternalNodes(tree.root));
-
         System.out.println("Level of the max node: " + tree.maxNodeLevel(tree.root));
-
         System.out.println("Difference between max node and root: " + tree.diffMaxRoot());
-
         System.out.println("Sum of nodes between 5 and 20: " + tree.sumBetween(5, 20, tree.root));
-
         System.out.print("Breadth-First Order: ");
         tree.breadthFirstOrder();
-
         System.out.println("\n\nStructured Tree:");
-        tree.printTree();
+        System.out.println(tree.formatTree()); // Utilizando TreeFormatter para formatar a árvore
 
         AVLTree treeAvl = new AVLTree();
         int[] values1 = {10, 20, 30, 40, 50, 60, 70, 80, 90};
@@ -30,7 +25,7 @@ public class Main {
             treeAvl.add(value);
         }
         System.out.println("Árvore AVL:");
-        treeAvl.printTree();
+        System.out.println(treeAvl.formatTree()); // Utilizando TreeFormatter para formatar a árvore
         System.out.println("Altura da árvore: " + treeAvl.height());
         treeAvl.clear();
         int[] values2 = {90, 80, 70, 60, 50, 40, 30, 20, 10};
@@ -38,8 +33,7 @@ public class Main {
             treeAvl.add(value);
         }
         System.out.println("Árvore AVL 2:");
-        treeAvl.printTree();
+        System.out.println(treeAvl.formatTree()); // Utilizando TreeFormatter para formatar a árvore
         System.out.println("Conteúdo da árvore (caminhamento central): " + treeAvl.inOrder());
     }
 }
-

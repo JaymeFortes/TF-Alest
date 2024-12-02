@@ -8,6 +8,10 @@ public class AVLTree {
     public AVLTree() {
         root = null;
     }
+    public String formatTree() {
+        TreeFormatter formatter = new TreeFormatter();
+        return formatter.topDown(root);
+    }
 
     // Método para adicionar elementos na árvore
     public void add(int value) {
